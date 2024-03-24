@@ -148,44 +148,50 @@ public class BookModel implements CRUDBook {
         return deleteBook;
     }
 
-    public Book findById(int id){
+    public Book findById(int id) {
         Connection objConnection = ConfigDB.openConnection();
         Book objBook = null;
         String sql = "SELECT * FROM book WHERE id = ?;";
         try {
             PreparedStatement objPrepared = objConnection.prepareStatement(sql);
-            objPrepared.setInt(1,id);
-            ResultSet objResult = objPrepared.executeQuery();
-            if (objResult.next()){
-                objBook = new Book();
-                objBook.setTitle(objResult.getString("title"));
-                objBook.setAgeOfPublication(objResult.getInt("publicationYear"));
-                objBook.setPrice(objResult.getDouble("price"));
-                objBook.setIdAuthor(objResult.getInt("id_author"));
-            }
-        }catch (SQLException error){
-            JOptionPane.showMessageDialog(null, error.getMessage());
-        }
-
-        return objBook;
-    }
-
-    public List<Book> findByIdAndAuthor(int id){
-        List<Book> objList = new ArrayList<>();
-        Book objBook = null;
-        Connection objConnection = ConfigDB.openConnection();
-        String sql = "SELECT *  FROM book WHERE id_author = ?;";
-        try {
-            PreparedStatement objPrepared = objConnection.prepareStatement(sql);
             objPrepared.setInt(1, id);
             ResultSet objResult = objPrepared.executeQuery();
-            while (objResult.next()){
+            if (objResult.next()) {
                 objBook = new Book();
                 objBook.setId(objResult.getInt("id"));
                 objBook.setTitle(objResult.getString("title"));
                 objBook.setAgeOfPublication(objResult.getInt("publicationYear"));
                 objBook.setPrice(objResult.getDouble("price"));
                 objBook.setIdAuthor(objResult.getInt("id_author"));
+            }
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, error.getMessage());
+        }
+
+        return objBook;
+    }
+
+    public List<Object> findByIdAndAuthor(int id){
+        List<Object> objList = new ArrayList<>();
+        Book objBook = null;
+        Connection objConnection = ConfigDB.openConnection();
+        String sql = "SELECT * FROM author INNER JOIN book ON author.id = book.id_author WHERE author.id = ?";
+        try {
+            PreparedStatement objPrepared = objConnection.prepareStatement(sql);
+            objPrepared.setInt(1, id);
+            ResultSet objResult = objPrepared.executeQuery();
+            while (objResult.next()){
+                Author author = new Author();
+                author.setId(objResult.getInt("author.id"));
+                author.setName(objResult.getString("author.name"));
+                author.setNationality(objResult.getString("author.nationality"));
+                objBook = new Book();
+                objBook.setId(objResult.getInt("id"));
+                objBook.setTitle(objResult.getString("title"));
+                objBook.setAgeOfPublication(objResult.getInt("publicationYear"));
+                objBook.setPrice(objResult.getDouble("price"));
+                objBook.setIdAuthor(objResult.getInt("id_author"));
+                objList.add(author);
                 objList.add(objBook);
             }
         } catch (SQLException error){

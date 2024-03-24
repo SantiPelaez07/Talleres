@@ -78,7 +78,8 @@ public class AuthorModel implements CRUDAuthor {
             int affectRows = objPrepared.executeUpdate();
 
             if (affectRows > 0){
-                JOptionPane.showMessageDialog(null, "The author was successfully modified");
+                String Author = objAuthor.getName();
+                JOptionPane.showMessageDialog(null, Author + "The author was successfully modified");
                 updateAuthor = true;
             }
 
@@ -122,6 +123,7 @@ public class AuthorModel implements CRUDAuthor {
                 ResultSet objResult = objPrepared.executeQuery();
                 if (objResult.next()){
                     objAuthor = new Author();
+                    objAuthor.setId(objResult.getInt("id"));
                     objAuthor.setName(objResult.getString("name"));
                     objAuthor.setNationality(objResult.getString("nationality"));
                 }

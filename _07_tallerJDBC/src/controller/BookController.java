@@ -60,10 +60,9 @@ public class BookController {
 
     public static void updateBook() {
         BookModel objModel = new BookModel();
-        Book objBook = new Book();
         String listBook = listBookString();
         int idUpdateBook = Integer.parseInt(JOptionPane.showInputDialog(listBook + "\nEnter the id of the book to modify: "));
-        objBook = objModel.findById(idUpdateBook);
+        Book objBook = objModel.findById(idUpdateBook);
         if (objBook == null) {
             JOptionPane.showMessageDialog(null, "Book not found.");
         } else {
@@ -100,7 +99,7 @@ public class BookController {
         if (listBook == null) {
             JOptionPane.showMessageDialog(null, "Id Author not found.");
         } else {
-            for (Book iterador : objModel.findByIdAndAuthor(idFindBook)) {
+            for (Object iterador : objModel.findByIdAndAuthor(idFindBook)) {
                 listBook += iterador.toString();
             }
             JOptionPane.showMessageDialog(null, listBook);

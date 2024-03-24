@@ -44,10 +44,9 @@ public class AuthorController {
 
     public static void updateAuthor(){
         AuthorModel objModel = new AuthorModel();
-        Author objAuthor = new Author();
         String listAuthor = listAuthorString();
         int idUpdate = Integer.parseInt(JOptionPane.showInputDialog(listAuthor + "\nEnter the id of the author to modify: "));
-        objAuthor = objModel.findById(idUpdate);
+        Author objAuthor = objModel.findById(idUpdate);
         if (objAuthor == null){
             JOptionPane.showMessageDialog(null, "Author not found.");
         }else {

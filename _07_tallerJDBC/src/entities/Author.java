@@ -43,6 +43,6 @@ public class Author {
         return  "Autor(es)\n" +
                 "id: " + id +
                 ", name: '" + name +
-                ", nationality: '" + nationality;
+                ", nationality: " + nationality + "\n";
     }
 }

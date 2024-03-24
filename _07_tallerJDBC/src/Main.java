@@ -55,8 +55,9 @@ public class Main {
                             2. List Book's available
                             3. Update Book
                             4. Delete Book
-                            5. View Book's and Authors
-                            6. Exit
+                            5. Find Book's by name
+                            6. Find Book's by id
+                            7. Exit
                             
                             Enter the desired option: 
                             """));
@@ -80,7 +81,7 @@ public class Main {
                             break;
                     }
 
-                }while (optionBook != 6);
+                }while (optionBook != 7);
             case 3:
                 BookController.findIdBookAndAuthor();
                 break;
